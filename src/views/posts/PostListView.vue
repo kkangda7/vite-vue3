@@ -13,25 +13,27 @@
 			</div>
 		</div>
 		<hr class="my4" />
-		<AppCard>
-			<PostDetailView :id="2" />
-		</AppCard>
+		<AppCard></AppCard>
 	</div>
 </template>
 
 <script setup>
 import PostItem from '@/components/posts/PostItem.vue';
-import PostDetailView from '@/views/posts/PostDetailView.vue';
 import AppCard from '@/components/AppCard.vue';
+import { getPosts } from '@/api/posts';
 import { useRouter } from 'vue-router';
-import { getPosts } from '@/api/posts.js';
 import { ref } from 'vue';
 
 const posts = ref([]);
 const router = useRouter();
 
-const fetchPosts = () => {
-	posts.value = getPosts();
+const fetchPosts = async () => {
+	try {
+		const { data } = await getPosts();
+		posts.value = data;
+	} catch (err) {
+		console.error(err);
+	}
 };
 fetchPosts();
 
