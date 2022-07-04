@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export function getPosts() {
-	return axios.get('http://localhost:4000/posts');
+export function getPosts(params) {
+	return axios.get('http://localhost:4000/posts', { params });
 }
 export function getPostById(id) {
 	return axios.get(`http://localhost:4000/posts/${id}`);
