@@ -8,7 +8,7 @@
 					<input type="text" class="form-control" v-model="params.title_like" />
 				</div>
 				<div class="col-3">
-					<select type="text" class="form-select" v-model="params._limit">
+					<select class="form-select" v-model="params._limit">
 						<option value="3">3개씩 보기</option>
 						<option value="6">6개씩 보기</option>
 						<option value="9">9개씩 보기</option>
