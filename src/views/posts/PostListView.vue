@@ -2,6 +2,21 @@
 	<div>
 		<h2>게시글 목록</h2>
 		<hr class="my-4" />
+		<form @submit.prevent>
+			<div class="row g-3">
+				<div class="col">
+					<input type="text" class="form-control" v-model="params.title_like" />
+				</div>
+				<div class="col-3">
+					<select type="text" class="form-select" v-model="params._limit">
+						<option value="3">3개씩 보기</option>
+						<option value="6">6개씩 보기</option>
+						<option value="9">9개씩 보기</option>
+					</select>
+				</div>
+			</div>
+		</form>
+		<hr class="my-4" />
 		<div class="row g-4">
 			<div class="col-4" v-for="post in posts" :key="post.id">
 				<post-item
@@ -12,7 +27,38 @@
 				/>
 			</div>
 		</div>
-		<hr class="my4" />
+		<nav class="mt-5" aria-label="Page navigation example">
+			<ul class="pagination justify-content-center">
+				<li class="page-item" :class="{ disabled: !(params._page > 1) }">
+					<a class="page-link" href="#" aria-label="Previous">
+						<span aria-hidden="true" @click.prevent="--params._page"
+							>&laquo;</span
+						>
+					</a>
+				</li>
+				<li
+					v-for="page in pageCount"
+					:key="page"
+					class="page-item"
+					:class="{ active: params._page === page }"
+				>
+					<a class="page-link" href="#" @click.prevent="movePage(page)">{{
+						page
+					}}</a>
+				</li>
+				<li
+					class="page-item"
+					:class="{ disabled: !(params._page < pageCount) }"
+				>
+					<a class="page-link" href="#" aria-label="Next">
+						<span aria-hidden="true" @click.prevent="++params._page"
+							>&raquo;</span
+						>
+					</a>
+				</li>
+			</ul>
+		</nav>
+		<hr class="my-5" />
 		<AppCard></AppCard>
 	</div>
 </template>
@@ -22,20 +68,37 @@ import PostItem from '@/components/posts/PostItem.vue';
 import AppCard from '@/components/AppCard.vue';
 import { getPosts } from '@/api/posts';
 import { useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 
 const posts = ref([]);
 const router = useRouter();
+const params = ref({
+	_sort: 'createAt',
+	_order: 'desc',
+	_page: 1,
+	_limit: 3,
+	title_like: '',
+});
+//pagination
+const totalCount = ref(0);
+const pageCount = computed(() => {
+	return Math.ceil(totalCount.value / params.value._limit);
+});
+const movePage = page => {
+	params.value._page = page;
+};
 
 const fetchPosts = async () => {
 	try {
-		const { data } = await getPosts();
+		const { data, headers } = await getPosts(params.value);
 		posts.value = data;
+		totalCount.value = headers['x-total-count'];
 	} catch (err) {
 		console.error(err);
 	}
 };
-fetchPosts();
+// fetchPosts();
+watchEffect(fetchPosts);
 
 const goPage = id => {
 	router.push({
