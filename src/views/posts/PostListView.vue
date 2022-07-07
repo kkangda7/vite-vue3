@@ -27,48 +27,28 @@
 				/>
 			</div>
 		</div>
-		<nav class="mt-5" aria-label="Page navigation example">
-			<ul class="pagination justify-content-center">
-				<li class="page-item" :class="{ disabled: !(params._page > 1) }">
-					<a class="page-link" href="#" aria-label="Previous">
-						<span aria-hidden="true" @click.prevent="--params._page"
-							>&laquo;</span
-						>
-					</a>
-				</li>
-				<li
-					v-for="page in pageCount"
-					:key="page"
-					class="page-item"
-					:class="{ active: params._page === page }"
-				>
-					<a class="page-link" href="#" @click.prevent="movePage(page)">{{
-						page
-					}}</a>
-				</li>
-				<li
-					class="page-item"
-					:class="{ disabled: !(params._page < pageCount) }"
-				>
-					<a class="page-link" href="#" aria-label="Next">
-						<span aria-hidden="true" @click.prevent="++params._page"
-							>&raquo;</span
-						>
-					</a>
-				</li>
-			</ul>
-		</nav>
-		<hr class="my-5" />
-		<AppCard></AppCard>
+		<AppPagenation
+			:pageCount="pageCount"
+			:currentPage="params._page"
+			@page="page => (params._page = page)"
+		/>
+		<template v-if="posts && posts.length > 0">
+			<hr class="my-5" />
+			<AppCard>
+				<PostDetailView :id="posts[0].id" />
+			</AppCard>
+		</template>
 	</div>
 </template>
 
 <script setup>
 import PostItem from '@/components/posts/PostItem.vue';
 import AppCard from '@/components/AppCard.vue';
+import AppPagenation from '@/components/AppPagenation.vue';
 import { getPosts } from '@/api/posts';
 import { useRouter } from 'vue-router';
 import { computed, ref, watchEffect } from 'vue';
+import PostDetailView from './PostDetailView.vue';
 
 const posts = ref([]);
 const router = useRouter();
@@ -84,9 +64,6 @@ const totalCount = ref(0);
 const pageCount = computed(() => {
 	return Math.ceil(totalCount.value / params.value._limit);
 });
-const movePage = page => {
-	params.value._page = page;
-};
 
 const fetchPosts = async () => {
 	try {
