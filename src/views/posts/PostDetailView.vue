@@ -49,7 +49,6 @@ const post = ref({
 const fetchPosts = async () => {
 	try {
 		const { data } = await getPostById(props.id);
-		console.dir(data);
 		setPost(data);
 	} catch (err) {
 		console.error(err);
