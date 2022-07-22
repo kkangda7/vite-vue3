@@ -24,7 +24,6 @@
 </template>
 
 <script setup>
-import AppModal from '@/components/AppModal.vue';
 import { computed } from '@vue/runtime-core';
 const props = defineProps({
 	modelValue: Boolean,

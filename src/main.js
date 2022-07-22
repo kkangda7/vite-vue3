@@ -3,14 +3,16 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from '@/router';
-import funcPlugins from './plugins/func';
-import objPlugins from './plugins/obj';
+// import funcPlugins from './plugins/func';
+// import objPlugins from './plugins/obj';
 import person from './plugins/person';
+import globalComponents from './plugins/global-components';
 
 const app = createApp(App);
 app.use(router);
-app.use(funcPlugins);
-app.use(objPlugins, { name: '플러그인' });
+app.use(globalComponents);
+// app.use(funcPlugins);
+// app.use(objPlugins, { name: '플러그인' });
 app.use(person, { name: '프로바이드/인젝트' });
 app.mount('#app');
 
