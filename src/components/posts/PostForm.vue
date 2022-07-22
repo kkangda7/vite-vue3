@@ -3,6 +3,8 @@
 		<div class="mb-3">
 			<label for="title" class="form-label">제목</label>
 			<input
+				v-focus
+				v-color="'yello'"
 				type="text"
 				:value="title"
 				@input="$emit('update:title', $event.target.value)"
@@ -32,6 +34,11 @@ defineProps({
 	content: String,
 });
 defineEmits(['update:title', 'update:content']);
+// const vFocus = {
+// 	mounted: el => {
+// 		el.focus();
+// 	},
+// };
 </script>
 
 <style lang="scss" scoped></style>
