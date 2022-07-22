@@ -18,7 +18,6 @@
 				<button class="btn btn-primary">수정</button>
 			</template>
 		</PostForm>
-		<AppAlert :items="alerts" />
 	</div>
 </template>
 
@@ -27,6 +26,7 @@ import { ref } from '@vue/reactivity';
 import { useRouter, useRoute } from 'vue-router';
 import PostForm from '@/components/posts/PostForm.vue';
 import { getPostById, updatePost } from '@/api/posts';
+import { useAlert } from '@/composables/alert';
 
 const router = useRouter();
 const route = useRoute();
@@ -43,6 +43,8 @@ const setForm = ({ title, content }) => {
 	form.value.createAt = Date.now();
 };
 
+const { vAlert, vSuccess } = useAlert();
+
 const fetchPost = async () => {
 	try {
 		const { data } = await getPostById(id);
@@ -57,8 +59,8 @@ fetchPost();
 const edit = async () => {
 	try {
 		await updatePost(id, { ...form.value });
-		// router.push({ name: 'PostDetail', params: { id } });
-		vAlert('수정이 완료되었습니다!', 'success');
+		router.push({ name: 'PostDetail', params: { id } });
+		vSuccess('수정이 완료되었습니다!');
 	} catch (err) {
 		console.error(err);
 		vAlert(err.message);
@@ -70,15 +72,6 @@ const goDetailpage = () => {
 		name: 'PostDetail',
 		params: { id },
 	});
-};
-
-// alert
-const alerts = ref([]);
-const vAlert = (message, type = 'error') => {
-	alerts.value.push({ message, type });
-	setTimeout(() => {
-		alerts.value.shift();
-	}, 2000);
 };
 </script>
 
