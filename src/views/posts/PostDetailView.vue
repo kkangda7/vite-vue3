@@ -2,7 +2,9 @@
 	<div>
 		<h2>{{ post.title }}</h2>
 		<p>{{ post.content }}</p>
-		<p class="text-muted">{{ post.createAt }}</p>
+		<p class="text-muted">
+			{{ $dayjs(post.createAt).format('YYYY. MM. DD HH:mm:ss') }}
+		</p>
 		<hr class="my-4" />
 		<div class="row" g-2>
 			<div class="col-auto">
@@ -86,5 +88,3 @@ const goEditPage = () => {
 	});
 };
 </script>
-
-<style lang="scss" scoped></style>
