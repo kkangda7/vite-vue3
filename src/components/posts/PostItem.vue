@@ -4,7 +4,7 @@
 		<p class="card-text">
 			{{ content }}
 		</p>
-		<p class="text-muted">{{ createAt }}</p>
+		<p class="text-muted">{{ createDate }}</p>
 		<template #footer>
 			<div class="d-flex flex-row-reverse">
 				<button class="btn p-0" @click.stop="$emit('modal')">
@@ -15,8 +15,9 @@
 	</AppCard>
 </template>
 <script setup>
-import AppCard from '@/components/AppCard.vue';
-defineProps({
+import { computed, inject } from '@vue/runtime-core';
+
+const props = defineProps({
 	title: {
 		type: String,
 		required: true,
@@ -29,6 +30,12 @@ defineProps({
 	},
 });
 defineEmits(['modal']);
+
+const dayjs = inject('dayjs');
+
+const createDate = computed(() => {
+	return dayjs(props.createAt).format('YYYY. MM. DD HH:mm:ss');
+});
 </script>
 
 <style lang="scss" scoped></style>

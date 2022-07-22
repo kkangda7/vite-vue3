@@ -26,7 +26,6 @@
 import { ref } from '@vue/reactivity';
 import { useRouter, useRoute } from 'vue-router';
 import PostForm from '@/components/posts/PostForm.vue';
-import AppAlert from '@/components/AppAlert.vue';
 import { getPostById, updatePost } from '@/api/posts';
 
 const router = useRouter();

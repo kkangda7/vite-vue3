@@ -39,16 +39,13 @@
 </template>
 
 <script setup>
-import PostItem from '@/components/posts/PostItem.vue';
-import AppCard from '@/components/AppCard.vue';
-import AppPagenation from '@/components/AppPagenation.vue';
 import { getPosts } from '@/api/posts';
 import { useRouter } from 'vue-router';
 import { computed, ref, watchEffect } from 'vue';
 import PostDetailView from './PostDetailView.vue';
-import AppGrid from '@/components/AppGrid.vue';
 import PostFilter from '@/components/posts/PostFilter.vue';
 import PostModal from '@/components/posts/PostModal.vue';
+import PostItem from '@/components/posts/PostItem.vue';
 
 const posts = ref([]);
 const router = useRouter();
