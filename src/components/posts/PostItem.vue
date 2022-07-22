@@ -5,6 +5,13 @@
 			{{ content }}
 		</p>
 		<p class="text-muted">{{ createAt }}</p>
+		<template #footer>
+			<div class="d-flex flex-row-reverse">
+				<button class="btn p-0" @click.stop="$emit('modal')">
+					<i class="bi bi-emoji-sunglasses" />
+				</button>
+			</div>
+		</template>
 	</AppCard>
 </template>
 <script setup>
@@ -21,6 +28,7 @@ defineProps({
 		type: [String, Date, Number],
 	},
 });
+defineEmits(['modal']);
 </script>
 
 <style lang="scss" scoped></style>
