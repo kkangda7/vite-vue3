@@ -18,11 +18,6 @@
 				<button class="btn btn-primary">수정</button>
 			</template>
 		</PostForm>
-		<!-- <AppAlert
-			:show="showAlert"
-			:alertMessage="alertMessage"
-			:alertType="alertType"
-		/> -->
 		<AppAlert :items="alerts" />
 	</div>
 </template>
