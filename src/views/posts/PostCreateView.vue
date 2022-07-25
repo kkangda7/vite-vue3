@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h2>게시글 등록</h2>
+		<h2>書き込み登録</h2>
 		<hr class="my-4" />
 		<AppError v-if="error" :message="error.message" />
 		<PostForm
@@ -10,7 +10,7 @@
 		>
 			<template #actions>
 				<button type="button" class="btn btn-outline-dark" @click="goListPage">
-					목록
+					リスト
 				</button>
 
 				<button class="btn btn-primary" :disabled="loading">
@@ -22,7 +22,7 @@
 						></span>
 						<span class="visually-hidden">Loading...</span>
 					</template>
-					<template v-else> 저장 </template>
+					<template v-else> 保存 </template>
 				</button>
 			</template>
 		</PostForm>

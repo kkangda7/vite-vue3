@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h2>게시글 목록</h2>
+		<h2>書き込みリスト</h2>
 		<hr class="my-4" />
 		<PostFilter v-model:title="params.title_like" v-model:limit="params._limit">
 		</PostFilter>
@@ -46,18 +46,14 @@
 </template>
 
 <script setup>
-import { getPosts } from '@/api/posts';
 import { useRouter } from 'vue-router';
-import { computed, ref, watchEffect } from 'vue';
+import { computed, ref } from 'vue';
 import PostDetailView from './PostDetailView.vue';
 import PostFilter from '@/components/posts/PostFilter.vue';
 import PostModal from '@/components/posts/PostModal.vue';
 import PostItem from '@/components/posts/PostItem.vue';
+import { useAxios } from '@/composables/useAxios';
 
-const error = ref(null);
-const loading = ref(false);
-
-const posts = ref([]);
 const router = useRouter();
 const params = ref({
 	_sort: 'createAt',
@@ -67,26 +63,36 @@ const params = ref({
 	title_like: '',
 });
 //pagination
-const totalCount = ref(0);
+const totalCount = computed(() => {
+	return response.value.headers['x-total-count'];
+});
 const pageCount = computed(() => {
 	return Math.ceil(totalCount.value / params.value._limit);
 });
 
-const fetchPosts = async () => {
-	try {
-		loading.value = true;
-		const { data, headers } = await getPosts(params.value);
-		posts.value = data;
-		totalCount.value = headers['x-total-count'];
-	} catch (err) {
-		console.error(err);
-		error.value = err;
-	} finally {
-		loading.value = false;
-	}
-};
+const {
+	response,
+	data: posts,
+	error,
+	loading,
+} = useAxios('/posts', { method: 'get', params });
+
+// const posts = ref([]);
+// const fetchPosts = async () => {
+// 	try {
+// 		loading.value = true;
+// 		const { data, headers } = await getPosts(params.value);
+// 		posts.value = data;
+// 		totalCount.value = headers['x-total-count'];
+// 	} catch (err) {
+// 		console.error(err);
+// 		error.value = err;
+// 	} finally {
+// 		loading.value = false;
+// 	}
+// };
 // fetchPosts();
-watchEffect(fetchPosts);
+// watchEffect(fetchPosts);
 
 const goPage = id => {
 	router.push({

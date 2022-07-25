@@ -3,7 +3,7 @@
 		<h2>Home view</h2>
 		<p>{{ $route.path }}</p>
 		<p>{{ $route.name }}</p>
-		<button class="btn btn-primary" @click="goAboutPage">About으로 이동</button>
+		<button class="btn btn-primary" @click="goAboutPage">アバウトに移動</button>
 		<hr class="my-4" />
 		<AppGrid v-slot="{ item, index }" :items="items">
 			<AppCard>{{ item }} {{ index }}</AppCard>
@@ -34,7 +34,7 @@ const goAboutPage = () => {
 		name: 'About',
 	});
 };
-const items = ref(['사과', '딸기', '포도', '바나나']);
+const items = ref(['リンゴ', 'イチゴ', 'ブドウ', 'バナナ']);
 
 const person = inject('person');
 console.log('person.name', person.name);

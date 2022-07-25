@@ -1,12 +1,12 @@
 <template>
-	<AppModal v-model="show" :modalValue="show" title="게시글">
+	<AppModal v-model="show" :modalValue="show" title="書き込み">
 		<template #default>
 			<div class="row g-3">
-				<div class="col-3 text-muted">제목</div>
+				<div class="col-3 text-muted">タイトル</div>
 				<div class="col-9">{{ title }}</div>
-				<div class="col-3 text-muted">내용</div>
+				<div class="col-3 text-muted">内容</div>
 				<div class="col-9">{{ content }}</div>
-				<div class="col-3 text-muted">등록일</div>
+				<div class="col-3 text-muted">登録日</div>
 				<div class="col-9">
 					{{ $dayjs(createAt).format('YYYY. MM. DD HH:mm:ss') }}
 				</div>
@@ -19,7 +19,7 @@
 				data-bs-dismiss="modal"
 				@click.stop="closeModal"
 			>
-				닫기
+				閉じる
 			</button>
 		</template>
 	</AppModal>

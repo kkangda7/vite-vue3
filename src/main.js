@@ -13,7 +13,7 @@ import dayjs from './plugins/dayjs';
 
 const app = createApp(App);
 app.use(router);
-app.use(person, { name: '프로바이드/인젝트' });
+app.use(person, { name: 'provide/inject' });
 app.use(globalDirective);
 app.use(dayjs);
 app.mount('#app');

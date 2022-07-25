@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h2>게시글 수정</h2>
+		<h2>書き込み修正</h2>
 		<hr class="my-4" />
 		<AppError v-if="editError" :message="editError.message" />
 		<PostForm
@@ -14,7 +14,7 @@
 					class="btn btn-outline-danger"
 					@click="goDetailpage"
 				>
-					취소
+					取り消し
 				</button>
 				<button class="btn btn-primary" :disabled="editLoading">
 					<template v-if="editLoading">
@@ -23,9 +23,9 @@
 							role="status"
 							aria-hidden="true"
 						></span>
-						<span class="visually-hidden">Loading...</span>
+						<span class="visually-hidden">ローディング...</span>
 					</template>
-					<template v-else> 수정 </template>
+					<template v-else> 修正 </template>
 				</button>
 			</template>
 		</PostForm>

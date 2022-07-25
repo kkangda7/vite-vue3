@@ -1,4 +1,7 @@
 <template>
+	<AppLoading v-if="loading" />
+
+	<AppError v-else-if="error" :message="error.message" />
 	<div>
 		<h2>{{ post.title }}</h2>
 		<p>{{ post.content }}</p>
@@ -6,24 +9,29 @@
 			{{ $dayjs(post.createAt).format('YYYY. MM. DD HH:mm:ss') }}
 		</p>
 		<hr class="my-4" />
-		<div class="row" g-2>
+
+		<AppLoading v-if="loading" />
+
+		<AppError v-else-if="error" :message="error.message" />
+
+		<div v-else class="row" g-2>
 			<div class="col-auto">
-				<button class="btn btn-outline-dark" @click="test">이전글</button>
+				<button class="btn btn-outline-dark" @click="test">前の文</button>
 			</div>
 			<div class="col-auto">
-				<button class="btn btn-outline-dark">다음글</button>
+				<button class="btn btn-outline-dark">次の文</button>
 			</div>
 			<div class="col-auto me-auto"></div>
 			<div class="col-auto">
-				<button class="btn btn-outline-dark" @click="goListPage">목록</button>
+				<button class="btn btn-outline-dark" @click="goListPage">リスト</button>
 			</div>
 			<div class="col-auto">
 				<button class="btn btn-outline-primary" @click="goEditPage">
-					수정
+					修正
 				</button>
 			</div>
 			<div class="col-auto">
-				<button class="btn btn-outline-danger" @click="remove">삭제</button>
+				<button class="btn btn-outline-danger" @click="remove">削除</button>
 			</div>
 		</div>
 		<!-- <p>params: {{ $route.params }}</p>
