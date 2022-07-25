@@ -2,7 +2,7 @@
 	<header>
 		<nav class="navbar navbar-expand-sm navbar-dark bg-primary">
 			<div class="container-fluid">
-				<router-link class="navbar-brand" to="/">GYM CODING</router-link>
+				<router-link class="navbar-brand" to="/">VITE</router-link>
 				<button
 					class="navbar-toggler"
 					type="button"
@@ -18,22 +18,24 @@
 					<ul class="navbar-nav me-auto">
 						<li class="nav-item">
 							<router-link class="nav-link active" aria-current="page" to="/"
-								>Home</router-link
+								>ホーム</router-link
 							>
 						</li>
 						<li class="nav-item">
-							<router-link class="nav-link" to="/about">About</router-link>
+							<router-link class="nav-link" to="/about">アバウト</router-link>
 						</li>
 						<li class="nav-item">
-							<router-link class="nav-link" to="/posts">게시글</router-link>
+							<router-link class="nav-link" to="/posts">書き込み</router-link>
 						</li>
 						<li class="nav-item">
-							<router-link class="nav-link" to="/nested">Nested</router-link>
+							<router-link class="nav-link" to="/nested"
+								>ネステッド</router-link
+							>
 						</li>
 					</ul>
 					<div class="d-flex" role="search">
 						<button class="btn btn-outline-light" @click="goPage" type="button">
-							글쓰기
+							文の作成
 						</button>
 					</div>
 				</div>

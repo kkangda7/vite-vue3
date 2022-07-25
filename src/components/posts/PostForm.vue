@@ -1,7 +1,7 @@
 <template>
 	<form>
 		<div class="mb-3">
-			<label for="title" class="form-label">제목</label>
+			<label for="title" class="form-label">タイトル</label>
 			<input
 				v-focus
 				v-color="'yello'"
@@ -13,7 +13,7 @@
 			/>
 		</div>
 		<div class="mb-3">
-			<label for="content" class="form-label">내용</label>
+			<label for="content" class="form-label">内容</label>
 			<textarea
 				class="form-control"
 				id="content"

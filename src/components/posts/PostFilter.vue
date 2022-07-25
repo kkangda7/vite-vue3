@@ -7,7 +7,7 @@
 					class="form-control"
 					:value="title"
 					@input="$emit('update:title', $event.target.value)"
-					placeholder="제목으로 검색해 주세요"
+					placeholder="タイトルで検索してください。"
 				/>
 			</div>
 			<div class="col-3">
@@ -16,9 +16,9 @@
 					:value="limit"
 					@input="$emit('update:limit', $event.target.value)"
 				>
-					<option value="3">3개씩 보기</option>
-					<option value="6">6개씩 보기</option>
-					<option value="9">9개씩 보기</option>
+					<option value="3">3つずつ見る</option>
+					<option value="6">6つずつ見る 보기</option>
+					<option value="9">9つずつ見る 보기</option>
 				</select>
 			</div>
 		</div>
