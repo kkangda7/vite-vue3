@@ -2,7 +2,7 @@
 	<header>
 		<nav class="navbar navbar-expand-sm navbar-dark bg-primary">
 			<div class="container-fluid">
-				<router-link class="navbar-brand" to="/">GYM CODING</router-link>
+				<router-link class="navbar-brand" to="/">VITE</router-link>
 				<button
 					class="navbar-toggler"
 					type="button"

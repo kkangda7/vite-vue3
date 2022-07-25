@@ -1,5 +1,7 @@
 <template>
-	<div>
+	<AppLoading v-if="loading" />
+	<AppError v-else-if="error" :message="error.message" />
+	<div v-else>
 		<h2>書き込み修正</h2>
 		<hr class="my-4" />
 		<AppError v-if="editError" :message="editError.message" />
@@ -33,55 +35,38 @@
 </template>
 
 <script setup>
-import { ref } from '@vue/reactivity';
 import { useRouter, useRoute } from 'vue-router';
 import PostForm from '@/components/posts/PostForm.vue';
-import { getPostById, updatePost } from '@/api/posts';
 import { useAlert } from '@/composables/alert';
+import { useAxios } from '@/composables/useAxios';
 
 const router = useRouter();
 const route = useRoute();
 const id = route.params.id;
-const form = ref({
-	title: '',
-	content: '',
-	createAt: '',
-});
-
-const setForm = ({ title, content }) => {
-	form.value.title = title;
-	form.value.content = content;
-	form.value.createAt = Date.now();
-};
 
 const { vAlert, vSuccess } = useAlert();
+const { error, loading, data: form } = useAxios(`/posts/${id}`);
+const {
+	error: editError,
+	loading: editLoading,
+	excute,
+} = useAxios(
+	`posts/${id}`,
+	{ method: 'patch' },
+	{
+		immediate: false,
+		onSuccess: () => {
+			router.push({ name: 'PostDetail', params: { id } });
+			vSuccess('修正できました。');
+		},
+		onError: err => {
+			vAlert(err.message);
+		},
+	},
+);
 
-const fetchPost = async () => {
-	try {
-		const { data } = await getPostById(id);
-		setForm(data);
-	} catch (err) {
-		console.error(err);
-		vAlert(err.message);
-	}
-};
-fetchPost();
-
-const editError = ref(null);
-const editLoading = ref(false);
-
-const edit = async () => {
-	try {
-		editLoading.value = true;
-		await updatePost(id, { ...form.value });
-		router.push({ name: 'PostDetail', params: { id } });
-		vSuccess('수정이 완료되었습니다!');
-	} catch (err) {
-		vAlert(err.message);
-		editError.value = err;
-	} finally {
-		editLoading.value = false;
-	}
+const edit = () => {
+	excute({ ...form.value });
 };
 
 const goDetailpage = () => {
@@ -91,5 +76,3 @@ const goDetailpage = () => {
 	});
 };
 </script>
-
-<style lang="scss" scoped></style>

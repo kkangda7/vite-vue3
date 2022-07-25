@@ -24,7 +24,7 @@ export default {
 </script>
 
 <script setup>
-import { ref } from '@vue/reactivity';
+import { ref, unref, reactive, toRefs } from '@vue/reactivity';
 import { useRouter } from 'vue-router';
 import { inject } from '@vue/runtime-core';
 
@@ -35,6 +35,20 @@ const goAboutPage = () => {
 	});
 };
 const items = ref(['リンゴ', 'イチゴ', 'ブドウ', 'バナナ']);
+
+const foo = ref('rrr');
+const bar = 'rrr';
+
+console.log(unref(foo));
+console.log(unref(bar));
+
+const state = reactive({
+	foo: 1,
+	bar: 2,
+});
+const stateAsRefs = toRefs(state);
+
+console.log(stateAsRefs.foo.value);
 
 const person = inject('person');
 console.log('person.name', person.name);

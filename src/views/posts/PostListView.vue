@@ -59,7 +59,7 @@ const params = ref({
 	_sort: 'createAt',
 	_order: 'desc',
 	_page: 1,
-	_limit: 3,
+	_limit: 6,
 	title_like: '',
 });
 //pagination
@@ -75,7 +75,7 @@ const {
 	data: posts,
 	error,
 	loading,
-} = useAxios('/posts', { method: 'get', params });
+} = useAxios('/posts', { params });
 
 // const posts = ref([]);
 // const fetchPosts = async () => {
