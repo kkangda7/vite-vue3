@@ -25,6 +25,9 @@
 							<router-link class="nav-link" to="/about">アバウト</router-link>
 						</li>
 						<li class="nav-item">
+							<router-link class="nav-link" to="/my">マイページ</router-link>
+						</li>
+						<li class="nav-item">
 							<router-link class="nav-link" to="/posts">書き込み</router-link>
 						</li>
 						<li class="nav-item">

@@ -52,7 +52,7 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
+import { onBeforeRouteLeave, onBeforeRouteUpdate, useRouter } from 'vue-router';
 import { useAlert } from '@/composables/alert';
 import { useAxios } from '@/composables/useAxios';
 import { computed, toRef } from '@vue/runtime-core';
@@ -110,5 +110,19 @@ const goEditPage = () => {
 		name: 'PostEdit',
 		params: { id: props.id },
 	});
+};
+
+onBeforeRouteUpdate(() => {
+	console.log('onBeforeRouteUpdate');
+});
+onBeforeRouteLeave(() => {
+	console.log('onBeforeRouteLeave');
+});
+</script>
+<script>
+export default {
+	beforeRouteEnter() {
+		console.log('beforeRouteEnter');
+	},
 };
 </script>
