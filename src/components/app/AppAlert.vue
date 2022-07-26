@@ -5,7 +5,7 @@
 				class="alert"
 				:class="typeStyle(type)"
 				role="alert"
-				v-for="({ message, type }, index) in items"
+				v-for="({ message, type }, index) in alerts"
 				:key="index"
 			>
 				{{ message }}
@@ -15,10 +15,9 @@
 </template>
 
 <script setup>
-defineProps({
-	items: Array,
-});
+import { useAlert } from '@/composables/alert';
 
+const { alerts } = useAlert();
 const typeStyle = type => (type === 'error' ? 'alert-danger' : 'alert-warning');
 </script>
 
