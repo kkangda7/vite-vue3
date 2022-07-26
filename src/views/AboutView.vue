@@ -6,18 +6,37 @@
 			<p>역순으로 표시된 메시지 watchEffect: "{{ reversedMessage }}"</p>
 			<p>역순으로 표시된 메시지 computed: "{{ reversedMessage1 }}"</p>
 		</div>
+		<hr py-4 />
+		<div>
+			<h2>Pinia</h2>
+			<p>state: {{ counter }}</p>
+			<p>getters: {{ doubleCount }}</p>
+			<p>getters + this : {{ doubleCountPlusOne }}</p>
+			<button class="btn btn-primary" @click="incremnet()">actions</button>
+		</div>
 	</div>
 </template>
 
 <script setup>
 import { ref } from '@vue/reactivity';
 import { watchEffect, computed } from '@vue/runtime-core';
+import { useCouterStore } from '@/stores/counter';
+import { storeToRefs } from 'pinia';
 
 const message = ref('안녕하세요');
 const reversedMessage = ref('');
 
+const store = useCouterStore();
+// store는 reactive로 랩핑된 객체이므로 구조분해할당을 하면 반응성을 잃는다.
+// 따라서 구조분해할달을 할대 반응성을 잃지 않기 위해 toRefs와 같은 storeToRefs 사용해야한다.
+const { counter, doubleCount, doubleCountPlusOne } = storeToRefs(store);
+// actions에 있는 메소드는 그냥 가져와야한다.
+const { incremnet } = store;
+// vuex 와 다르게 pinia 에서는 스테이트 값을 직접 수정할수 있다
+counter.value = 100;
+
 // computed : 익명함수가 할당(반드시 리턴)
-// getter로 설정되므로 getter의 특성때문에 계산결과가 캐싱된다(methids와의 차이점)
+// getter로 설정되므로 getter의 특성때문에 계산결과가 캐싱된다(methods와의 차이점)
 // computed는 reactive하다(message를 감시하고 있다가 reversedMessage를 다시계산한다) > 그래서 반응형 getter라고도 한다.
 const reversedMessage1 = computed(() => {
 	return message.value.split('').reverse().join('-');
