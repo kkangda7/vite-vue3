@@ -11,6 +11,11 @@
 		<hr class="my-4" />
 		<h2>{{ $person.name }}</h2>
 		<button class="btn btn-primary" @click="person.say">click person</button>
+		<hr class="my-4" />
+		<h2>toRef/toRefs</h2>
+		<h3>{{ position }}</h3>
+		<h3>{{ x }},{{ y }}</h3>
+		<h3>{{ z }},{{ e }}</h3>
 	</div>
 </template>
 
@@ -24,7 +29,7 @@ export default {
 </script>
 
 <script setup>
-import { ref, unref, reactive, toRefs } from '@vue/reactivity';
+import { ref, unref, reactive, toRef, toRefs } from '@vue/reactivity';
 import { useRouter } from 'vue-router';
 import { inject } from '@vue/runtime-core';
 
@@ -39,16 +44,22 @@ const items = ref(['リンゴ', 'イチゴ', 'ブドウ', 'バナナ']);
 const foo = ref('rrr');
 const bar = 'rrr';
 
-console.log(unref(foo));
-console.log(unref(bar));
+console.log('unref:', unref(foo));
+console.log('unref:', unref(bar));
 
-const state = reactive({
-	foo: 1,
-	bar: 2,
+// toRef >> 하위요소에 반응형을 잃지 않게 하기위해씀  하나씩
+const position = reactive({
+	x: 100,
+	y: 1000,
+	z: 200,
+	e: 2000,
 });
-const stateAsRefs = toRefs(state);
+// const { x, y } = position; X
+const x = toRef(position, 'x');
+const y = toRef(position, 'y');
 
-console.log(stateAsRefs.foo.value);
+// toRefs >> 구조분해할달을 위해 가져옴
+const { z, e } = toRefs(position);
 
 const person = inject('person');
 console.log('person.name', person.name);
