@@ -2,14 +2,22 @@
 	<div>
 		<h2>書き込みリスト</h2>
 		<hr class="my-4" />
-		<PostFilter v-model:title="params.title_like" v-model:limit="params._limit">
+		<PostFilter
+			v-model:title="params.title_like"
+			:limit="params._limit"
+			@update:limit="chageLimit"
+		>
 		</PostFilter>
 		<hr class="my-4" />
 		<AppLoading v-if="loading" />
 		<AppError v-else-if="error" :message="error.message" />
 
+		<template v-else-if="!isExist">
+			<p class="text-center py-5 text-muted">No Results</p>
+		</template>
+
 		<template v-else>
-			<AppGrid :items="posts">
+			<AppGrid :items="posts" col-class="col-12 col-md-6 col-lg-4">
 				<template v-slot="{ item }">
 					<post-item
 						:title="item.title"
@@ -69,13 +77,6 @@ const params = ref({
 	_limit: 6,
 	title_like: '',
 });
-//pagination
-const totalCount = computed(() => {
-	return response.value.headers['x-total-count'];
-});
-const pageCount = computed(() => {
-	return Math.ceil(totalCount.value / params.value._limit);
-});
 
 const {
 	response,
@@ -83,6 +84,23 @@ const {
 	error,
 	loading,
 } = useAxios('/posts', { params });
+
+const chageLimit = value => {
+	params.value._limit = value;
+	params.value._page = 1;
+};
+
+const isExist = computed(() => {
+	return posts.value && posts.value.length > 0;
+});
+
+//pagination
+const totalCount = computed(() => {
+	return response.value.headers['x-total-count'];
+});
+const pageCount = computed(() => {
+	return Math.ceil(totalCount.value / params.value._limit);
+});
 
 // const posts = ref([]);
 // const fetchPosts = async () => {
