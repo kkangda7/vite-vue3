@@ -6,7 +6,7 @@
 					type="text"
 					class="form-control"
 					:value="title"
-					@input="$emit('update:title', $event.target.value)"
+					@input="changeTitle"
 					placeholder="タイトルで検索してください。"
 				/>
 			</div>
@@ -16,9 +16,9 @@
 					:value="limit"
 					@input="$emit('update:limit', $event.target.value)"
 				>
-					<option value="3">3つずつ見る</option>
-					<option value="6">6つずつ見る 보기</option>
-					<option value="9">9つずつ見る 보기</option>
+					<option value="6">6つずつ見る</option>
+					<option value="12">12つずつ見る 보기</option>
+					<option value="18">18つずつ見る 보기</option>
 				</select>
 			</div>
 		</div>
@@ -30,7 +30,13 @@ defineProps({
 	title: String,
 	limit: [String, Number],
 });
-defineEmits(['update:title', 'update:limit']);
+const emit = defineEmits(['update:title', 'update:limit']);
+
+const changeTitle = event => {
+	setTimeout(() => {
+		emit('update:title', event.target.value);
+	}, 500);
+};
 </script>
 
 <style lang="scss" scoped></style>
